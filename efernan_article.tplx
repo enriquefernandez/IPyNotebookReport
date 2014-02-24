@@ -1,0 +1,184 @@
+((= ((* set cell_style = 'style_notebook.tplx' *)) =))
+
+((* extends 'article.tplx' *))
+
+
+((* block input scoped *))
+    % Purpose: Renders an output/input prompt
+  ((* macro add_prompt(text, cell, prompt, prompt_color) -*))
+      ((*- set prompt_number = ""-*))
+      ((*- set indention =  " " * (prompt_number | length + 9) -*))
+  \begin{Verbatim}[commandchars=\\\{\}]
+  ((( text | add_prompts(first='{\color{' ~ prompt_color ~ '}' ~ prompt ~ '[{\\color{' ~ prompt_color ~ '}' ~ prompt_number ~ '}]:} ', cont=indention) )))
+  \end{Verbatim}
+  ((*- endmacro *))
+    ((( add_prompt(cell.input | highlight2latex(strip_verbatim=True), cell, 'In ', 'incolor') )))
+((* endblock input *))
+
+
+
+
+
+
+
+%===============================================================================
+% Enrique's Article
+%===============================================================================
+
+((* block docclass *))
+\documentclass{article}
+((* endblock docclass *))
+
+((* block packages *))
+    \usepackage{setspace}
+    \usepackage{fancyhdr}
+    \usepackage{lastpage}
+    \usepackage{extramarks}
+    \usepackage{chngpage}
+    \usepackage{soul}
+    \usepackage[usenames,dvipsnames]{color}
+    \usepackage{ifthen}
+    \usepackage[ruled, lined, commentsnumbered, longend]{algorithm2e}
+    \usepackage{booktabs}
+
+
+    ((( super() )))
+((* endblock packages *))    
+
+
+
+((* block definitions *))
+    ((( super() )))
+
+    ((* block homeworkinfo *))
+    % Homework Specific Information
+    \newcommand{\hmwkTitle}{Homework Title}
+    \newcommand{\hmwkSubTitle}{}
+    \newcommand{\hmwkDueDate}{\today}
+    \newcommand{\hmwkClass}{16.412J}
+    \newcommand{\hmwkAuthorName}{John Doe}
+    \newcommand{\hmwkAuthorEmail}{john@doe.com}
+    ((* endblock homeworkinfo *))
+
+((* endblock definitions *))
+
+((* block commands *))
+
+% In case you need to adjust margins:
+\topmargin=-0.45in      %
+\evensidemargin=0in     %
+\oddsidemargin=0in      %
+\textwidth=6.5in        %
+\textheight=9.0in       %
+\headsep=0.25in         %
+
+% Setup the header and footer
+\pagestyle{fancy}                                                       %
+\lhead{\hmwkAuthorName}                                                 %
+\chead{\hmwkClass\ : \hmwkTitle}  %
+\rhead{\firstxmark}                                                     %
+\lfoot{\lastxmark}                                                      %
+\cfoot{}                                                                %
+\rfoot{\thepage\ / \protect\pageref{LastPage}}                  %
+\renewcommand\headrulewidth{0.4pt}                                      %
+\renewcommand\footrulewidth{0.4pt}                                      %
+
+% This is used to trace down (pin point) problems
+% in latexing a document:
+%\tracingall
+
+
+% Some tools
+\newcommand{\enterProblemHeader}[1]{\nobreak\extramarks{#1}{#1 continued on next page\ldots}\nobreak%
+                                    \nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak}%
+\newcommand{\exitProblemHeader}[1]{\nobreak\extramarks{#1 (continued)}{#1 continued on next page\ldots}\nobreak%
+                                   \nobreak\extramarks{#1}{}\nobreak}%
+
+\newlength{\labelLength}
+\newcommand{\labelAnswer}[2]
+  {\settowidth{\labelLength}{#1}%
+   \addtolength{\labelLength}{0.25in}%
+   \changetext{}{-\labelLength}{}{}{}%
+   \noindent\fbox{\begin{minipage}[c]{\columnwidth}#2\end{minipage}}%
+   \marginpar{\fbox{#1}}%
+
+   % We put the blank space above in order to make sure this
+   % \marginpar gets correctly placed.
+   \changetext{}{+\labelLength}{}{}{}}%
+
+%\setcounter{secnumdepth}{0}
+\newcommand{\homeworkProblemName}{}%
+\newcounter{homeworkProblemCounter}%
+\newenvironment{homeworkProblem}[1][Problem \arabic{homeworkProblemCounter}]%
+  {\stepcounter{homeworkProblemCounter}%
+   \renewcommand{\homeworkProblemName}{#1}%
+   \section{\homeworkProblemName}%
+   \enterProblemHeader{\homeworkProblemName}}%
+  {\exitProblemHeader{\homeworkProblemName}}%
+
+\newcommand{\problemAnswer}[1]
+  {\noindent\fbox{\begin{minipage}[c]{\columnwidth}#1\end{minipage}}}%
+
+\newcommand{\problemLAnswer}[1]
+  {\labelAnswer{\homeworkProblemName}{#1}}
+
+\newcommand{\homeworkSectionName}{}%
+\newlength{\homeworkSectionLabelLength}{}%
+\newenvironment{homeworkSection}[1]%
+  {% We put this space here to make sure we're not connected to the above.
+   % Otherwise the changetext can do funny things to the other margin
+
+   \renewcommand{\homeworkSectionName}{#1}%
+   \settowidth{\homeworkSectionLabelLength}{\homeworkSectionName}%
+   \addtolength{\homeworkSectionLabelLength}{0.25in}%
+   \changetext{}{-\homeworkSectionLabelLength}{}{}{}%
+   \subsection{\homeworkSectionName}%
+   \enterProblemHeader{\homeworkProblemName\ [\homeworkSectionName]}}%
+  {\enterProblemHeader{\homeworkProblemName}%
+
+   % We put the blank space above in order to make sure this margin
+   % change doesn't happen too soon (otherwise \sectionAnswer's can
+   % get ugly about their \marginpar placement.
+   \changetext{}{+\homeworkSectionLabelLength}{}{}{}}%
+
+\newcommand{\sectionAnswer}[1]
+  {% We put this space here to make sure we're disconnected from the previous
+   % passage
+
+   \noindent\fbox{\begin{minipage}[c]{\columnwidth}#1\end{minipage}}%
+   \enterProblemHeader{\homeworkProblemName}\exitProblemHeader{\homeworkProblemName}%
+   \marginpar{\fbox{\homeworkSectionName}}%
+
+   % We put the blank space above in order to make sure this
+   % \marginpar gets correctly placed.
+   }%
+
+
+   \title{\vspace{2in}\textmd{\textbf{\hmwkClass:\ \hmwkTitle\ifthenelse{\equal{\hmwkSubTitle}{}}{}{\\\hmwkSubTitle}}}\\\normalsize\vspace{0.1in}\small{\hmwkDueDate}\\((* block precontentsspacing *))\vspace{0.1in}\vspace{2in}}((* endblock precontentsspacing *))
+\date{}
+\author{\textbf{\hmwkAuthorName}\\\small{\hmwkAuthorEmail}}
+
+
+((* endblock commands *))
+
+((* block predoc *))
+\begin{spacing}{1.1}
+((( super() )))
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+\clearpage
+
+((* endblock predoc *))
+
+((* block postdoc *))
+
+ ((( super() )))
+
+\end{spacing}
+
+((* endblock postdoc *))
+
+% Work around to fix vertical spacing issues with the notebook style.
+((* block extra_input_spacing *))\vspace{-1\baselineskip}((* endblock extra_input_spacing *))
+((* block extra_output_spacing *))\vspace{-0.6\baselineskip}((* endblock extra_output_spacing *))

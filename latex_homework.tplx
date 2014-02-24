@@ -1,0 +1,21 @@
+((* extends 'efernan_article.tplx' *))
+
+
+%===============================================================================
+% Latex Homework
+%===============================================================================
+
+((* block homeworkinfo *))
+    % Homework Specific Information
+    \newcommand{\hmwkTitle}{Homework Title}
+    \newcommand{\hmwkSubTitle}{}
+    \newcommand{\hmwkDueDate}{\today}
+    \newcommand{\hmwkClass}{16.412J}
+    \newcommand{\hmwkAuthorName}{John Doe}
+    \newcommand{\hmwkAuthorEmail}{john@doe.com}
+    ((* endblock homeworkinfo *))
+((* endblock homeworkinfo *))
+
+
+
+((* block precontentsspacing *))\vspace{0.1in}\vspace{2in}}((* endblock precontentsspacing *))
