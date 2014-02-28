@@ -13,7 +13,6 @@
     \newcommand{\hmwkClass}{16.412J}
     \newcommand{\hmwkAuthorName}{John Doe}
     \newcommand{\hmwkAuthorEmail}{john@doe.com}
-    ((* endblock homeworkinfo *))
 ((* endblock homeworkinfo *))
 
 
