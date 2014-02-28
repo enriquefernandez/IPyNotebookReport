@@ -38,7 +38,7 @@
     \usepackage{soul}
     \usepackage[usenames,dvipsnames]{color}
     \usepackage{ifthen}
-    \usepackage[ruled, lined, commentsnumbered, longend]{algorithm2e}
+    \usepackage[ruled, lined, linesnumbered, longend]{algorithm2e}
     \usepackage{booktabs}
 
 

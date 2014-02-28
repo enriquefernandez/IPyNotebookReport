@@ -6,3 +6,5 @@ c.NbConvertApp.export_format = 'latex'
 
 c.Exporter.template_file = 'latex_homework'
 c.Exporter.preprocessors = ['efernan_preprocessor.EfernanPreprocessor']
+
+c.NbConvertApp.postprocessor_class = 'PDF'
